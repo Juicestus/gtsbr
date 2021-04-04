@@ -1,0 +1,100 @@
+<script>
+x=4;
+y=4;
+s=1;
+xc = s;
+yc = s;
+c=0;
+colors = ["red","green","blue","yellow"]
+setInterval(function(){ 
+		if ((648 <= x && x <= 652) || (-2 <= x && x <= 2)) {
+				xc = -1/xc;
+				c++;
+		}
+
+		if ((398 <= y && y <= 402) || (-2 <= y && y <= 2)) {
+				yc = -1/yc;
+				c++;
+		}
+		x+=xc;
+		y+=yc;
+		color = colors[c % colors.length]
+        set = `<div class="box" style="background-color: ${color}; margin-left:${x}px; margin-top:${y}px;"><h2>No Signal</h2></div>`
+		document.getElementById("window").innerHTML = set;
+
+}, 1);
+</script>
+<style>
+div.window {
+		border: 2px solid black;
+		height: 450px;
+		width: 800px;
+}
+div.box {
+		border: 2px solid black;
+		background-color: green;
+		height: 50px;
+		width: 150px;
+		padding:0px;
+}
+h2 {
+		margin: 10px;
+}
+</style>
+
+<div class="window" id="window">
+
+</div>
+<p><a href="index.html">Back ..</a></p>
+<h1>No Signal</h1>
+<p>Uses JS to sent a div around another div</p>
+<h3>Code</h3>
+<pre><code>
+&lt;script&gt;
+x=4;
+y=4;
+s=1;
+xc = s;
+yc = s;
+c=0;
+colors = ["red","green","blue","yellow"]
+setInterval(function(){
+        if ((648 <= x && x <= 652) || (-2 <= x && x <= 2)) {
+                xc = -1/xc;
+                c++;
+        }
+
+        if ((398 <= y && y <= 402) || (-2 <= y && y <= 2)) {
+                yc = -1/yc;
+                c++;
+        }
+        x+=xc;
+        y+=yc;
+        color = colors[c % colors.length]
+        set = `&lt;div class="box" style="background-color: ${color}; margin-left:${x}px; margin-top:${y}px;"&gt;&lt;h2&gt;No Signal&lt;/h2&gt;&lt;/div&gt;`
+        document.getElementById("window").innerHTML = set;
+
+}, 1);
+&lt;/script&gt;
+&lt;style&gt;	
+div.window {
+        border: 2px solid black;
+        height: 450px;
+        width: 800px;
+}
+div.box {
+        border: 2px solid black;
+        background-color: green;
+        height: 50px;
+        width: 150px;
+        padding:0px;
+}
+h2 {
+        margin: 10px;
+}
+&lt;/style&gt;	
+
+&lt;div class="window" id="window"&gt;	
+
+&lt;/div&gt;	
+</code></pre>

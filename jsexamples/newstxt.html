@@ -1,0 +1,13 @@
+<script>
+		text = "This is text that is going across the screen like so ";
+		i=1;
+		setInterval(function(){ 
+				index = i % text.length;
+				set = text.slice(index,text.length) + text.slice(0,index);
+				document.getElementById('bar').innerHTML = set;
+				i++;
+		}, 100);
+</script>
+
+<h2 id="bar"></h2>
+
