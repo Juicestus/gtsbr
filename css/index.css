@@ -57,8 +57,7 @@ a.footer-link:hover {
     text-decoration: underline;
 }
 img.main {
-    margin-left: 25%;
-    margin-right: 25%;
+    text-shadow: none;
 }
 img.picon {
     margin-left:25px;
@@ -100,3 +99,6 @@ li.main {
     float: left;
     padding: 20px;
 }  
+td {
+    padding: 10px;
+}
