@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html lang="en" class="bg">
+    <head>
+        <script src='static/prism/prism.js'></script>
+
+        <script>
+            var dark = `<link rel="stylesheet" href="static/dark.css">`;
+            var light = `<link rel="stylesheet" href="static/light.css">`;
+            var pdark = `<link rel="stylesheet" href="static/prism/dark.css">`;
+            var plight = `<link rel="stylesheet" href="static/prism/light.css">`;
+        </script>
+
+        <link rel="stylesheet" href="static/style.css">
+        <script src='static/mode.js'></script>
+
+        <i id="style"> <link rel="stylesheet" href="static/dark.css"></i>
+        <i id="pstyle"> <link rel="stylesheet" href="static/prism/dark.css"></i>
+
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+        <meta name="description" content="Justus' personal website.">
+        <meta name="keywords" content="justus,languell,justus languell,juicestus">
+        <meta name="author" content="Justus Languell">
+        <title>Home</title>
+        <link rel="icon" href='static/img/uzi.png'>
+
+        <style>
+            @font-face {
+                font-family: "SFPro";
+                src: url('static/fonts/SFPro/SF-Pro-Text-Regular.otf');
+            }
+            @font-face {
+                font-family: "SFCompact";
+                src: url('static/fonts/SFCompact/SF-Compact.ttf');
+            }
+            @font-face {
+                font-family: "NY";
+                src: url('static/fonts/NewYork/NewYork.ttf');
+            }
+            @font-face {
+                font-family: "SFMono";
+                src: url('static/fonts/SFMono/SF-Mono.ttf');
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <center>
+                <p class=""><a href="index.html">Home</a> |
+                    <a href='mailto:jus@gtsbr.org'>EMail</a> |
+                    <a href="https://github.com/Juicestus">GitHub</a> |
+                    <a href='https://www.instagram.com/justus.l_/'>IG</a> <!--|
+                    <button id="toggle" type="button" class="btn btn-link" onclick="toggle()">Light Mode</button>-->
+                </p>
+                <h2>C++ Synthetic Division of Polynomials</h2>
+                <h4><a href="https://rosettacode.org/wiki/Polynomial_synthetic_division#C++">Rosetta Code entry</a> | <a href="/code/synthdiv.cpp">Raw</a></h4>
+            </center>
+            <pre><code class="language-cpp code">
+                /*
+                * C++ Polynomial Sythetic Division
+                * GNU Compile example for filename &lt;synthdiv.cpp&gt;
+                * g++ -std=c++11 -o synthdiv synthdiv.cpp
+                */
+                
+                #include &lt;iostream&gt;
+                #include &lt;vector&gt;
+                #include &lt;string&gt;
+                #include &lt;cmath&gt;
+                
+                /*
+                * frmtPolynomial method
+                * Returns string for formatted 
+                * polynomial from int vector of coefs.
+                * String looks like ax^2 + bx + c, 
+                * a, b, and c being the integer
+                * coefs in the vector.
+                */
+                
+                std::string frmtPolynomial(std::vector&lt;int&gt; polynomial, bool remainder = false)
+                {
+                    std::string r = "";
+                
+                    if (remainder) 
+                    {
+                        r = " r: " + std::to_string(polynomial.back());
+                        polynomial.pop_back();
+                    }
+                
+                    std::string formatted = "";
+                
+                    int degree = polynomial.size() - 1;
+                    int d = degree;
+                
+                    for (int i : polynomial)
+                    {
+                        if (d &lt; degree)
+                        {
+                            if (i &gt;= 0) 
+                            {
+                                formatted += " + ";
+                            }
+                            else
+                            {
+                                formatted += " - ";
+                            }
+                        }
+                
+                        formatted += std::to_string(abs(i));
+                
+                        if (d &gt; 1)
+                        {
+                            formatted += "x^" + std::to_string(d);
+                        }
+                        else if (d == 1)
+                        {
+                            formatted += "x";
+                        }
+                
+                        d--;
+                    }
+                
+                    return formatted;
+                }
+                
+                /*
+                * syntheticDiv Method
+                * Performs Integer Polynomial Sythetic Division
+                * on polynomials expressed as vectors of coefs.
+                * Takes int vector param for dividend and 
+                * divisor, and returns int vector quotient.
+                */
+                
+                std::vector&lt;int&gt; syntheticDiv(std::vector&lt;int&gt; dividend, std::vector&lt;int&gt; divisor)
+                {
+                    std::vector&lt;int&gt; quotient;
+                    quotient = dividend;
+                
+                    int normalizer = divisor[0];
+                
+                    for (int i = 0; i &lt; dividend.size() - (divisor.size() - 1); i++)
+                    {
+                        quotient[i] /= normalizer;
+                        int coef = quotient[i];
+                
+                        if (coef != 0) 
+                        {
+                            for (int j = 1; j &lt; divisor.size(); j++)
+                            {
+                                quotient[i + j] += -divisor[j] * coef;
+                            }
+                        }
+                
+                    }
+                
+                    return quotient;
+                }
+                
+                /*
+                * Example of using the syntheticDiv method
+                * and the frmtPolynomial method.
+                * Assigns dividend and divisor polynomials:
+                * dividend: 1x^3 - 12x^2 + 0x - 42
+                * divisor: 1x - 3
+                * Outputs both to cout using frmtPolynomial.
+                * Printed polynomials look like above format.
+                * Processes dividend and divisor in the 
+                * syntheticDiv method, returns quotient.
+                * Outputs quotient to cout using frmtPolynomial again.
+                * quotient: 1x^2 - 9x - 27 r: -123
+                */
+                
+                int main(int argc, char **argv) 
+                {
+                    std::vector&lt;int&gt; dividend{ 1, -12, 0, -42};
+                    std::vector&lt;int&gt; divisor{ 1, -3};
+                
+                    std::cout &lt;&lt; frmtPolynomial(dividend) &lt;&lt; "\n";
+                    std::cout &lt;&lt; frmtPolynomial(divisor) &lt;&lt; "\n";
+                
+                    std::vector&lt;int&gt; quotient = syntheticDiv(dividend, divisor);
+                
+                    std::cout &lt;&lt; frmtPolynomial(quotient, true) &lt;&lt; "\n";
+                
+                }
+            </code></pre>
+        </div>
+    </body>
+</html>
